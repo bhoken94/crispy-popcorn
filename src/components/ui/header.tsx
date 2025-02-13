@@ -8,7 +8,7 @@ const Header = () => {
     <Box as="header" p={4} boxShadow="md">
       <Flex align="center">
         <Link to="/">
-          <Heading size="sm">Crispy Popcorn</Heading>
+          <Heading size="xl">Crispy Popcorn</Heading>
         </Link>
         <Spacer />
 
