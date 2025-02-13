@@ -14,7 +14,6 @@ const HomeRoute = () => {
       }
       console.table(movies);
     };
-    fetchMovies();
   }, []);
 
   return (
