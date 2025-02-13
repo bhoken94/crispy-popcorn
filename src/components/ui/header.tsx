@@ -4,7 +4,6 @@ import { Link } from "react-router";
 import { Avatar } from "./avatar";
 import { ColorModeButton } from "./color-mode";
 import { MenuContent, MenuItem, MenuRoot, MenuTrigger } from "./menu";
-import { useRef } from "react";
 
 const Header = () => {
   const login = useLogin();
