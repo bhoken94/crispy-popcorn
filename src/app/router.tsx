@@ -9,7 +9,7 @@ export const createAppRouter = () =>
     {
       path: "/",
       lazy: () =>
-        import("./routes/landing").then((module) => ({
+        import("./routes/app/home").then((module) => ({
           ...module,
           Component: module.default,
         })),
