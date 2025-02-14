@@ -1,20 +1,21 @@
 import Header from "@/components/ui/header";
+import { useTrendingAll } from "@/features/home/api/trending-all";
 import MovieList from "@/features/home/components/movieList";
 import MovieSearch from "@/features/home/components/movieSearch";
-import { Heading, Stack } from "@chakra-ui/react";
-import { supabase } from "@/lib/supabase-client";
-import { useEffect } from "react";
+import { Flex, Heading, Spinner, Stack } from "@chakra-ui/react";
 
 const HomeRoute = () => {
-  useEffect(() => {
-    const fetchMovies = async () => {
-      const { data: movies, error } = await supabase.from("movies").select();
-      if (error) {
-        console.error(error);
-      }
-      console.table(movies);
-    };
-  }, []);
+  const trendingAllQuery = useTrendingAll({
+    timeWindow: "day",
+  });
+
+  if (trendingAllQuery.isLoading) {
+    return (
+      <Flex height={"100vh"} width={"100vw"} justifyContent={"center"} alignItems={"center"}>
+        <Spinner color={"blue.500"} size={"xl"} />
+      </Flex>
+    );
+  }
 
   return (
     <>
@@ -24,9 +25,9 @@ const HomeRoute = () => {
           Benvenuto in Crispy Popcorn
         </Heading>
         <MovieSearch />
-        <MovieList title="Trending Movies" />
-        <MovieList title="Top Rated" />
-        <MovieList title="Upcoming" />
+        <MovieList title="In tendenza" movies={trendingAllQuery.data?.results ?? []} />
+        {/* <MovieList title="I più votati" />
+        <MovieList title="In uscita" /> */}
       </Stack>
     </>
   );

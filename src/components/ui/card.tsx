@@ -15,9 +15,9 @@ const Card = (props: CardProps) => {
   return (
     <CardRoot variant={variant} key={variant}>
       <CardBody p="3" gap="2">
-        <CardTitle mb="2">{title}</CardTitle>
         <CardDescription>{description}</CardDescription>
-        {children} {/* Esplicitamente derivato da props.children */}
+        {children}
+        <CardTitle mb="2">{title}</CardTitle>
       </CardBody>
       {childrenFooter && <CardFooter justifyContent="flex-end">{childrenFooter}</CardFooter>}
     </CardRoot>
