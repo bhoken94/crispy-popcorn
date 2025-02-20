@@ -1,6 +1,8 @@
 import Card from "@/components/ui/card";
+import { Tooltip } from "@/components/ui/tooltip";
 import { MediaItem } from "@/types/api";
-import { Box, Button, Flex, Heading, Image, Container, IconButton } from "@chakra-ui/react";
+import { formatDate } from "@/utils/format";
+import { Box, Container, Flex, Heading, IconButton, Image, Text } from "@chakra-ui/react";
 import useEmblaCarousel from "embla-carousel-react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
@@ -60,15 +62,39 @@ const MovieList = ({ title, movies }: { title: string; movies: MediaItem[] }) =>
                 <Card
                   title={movie.title ?? movie.original_title ?? movie.name ?? movie.original_name ?? ""}
                   variant="elevated">
-                  <Image
-                    src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}
-                    alt={movie.title ?? movie.original_title ?? movie.name ?? movie.original_name ?? ""}
-                    width={300}
-                    height={450}
-                    aspectRatio={2 / 3}
-                    w="full"
-                    objectFit="cover"
-                  />
+                  <Tooltip
+                    key={movie.id}
+                    positioning={{ offset: { mainAxis: -100, crossAxis: -100 } }}
+                    content={
+                      <Box w="64" p={2}>
+                        <Heading size="sm" fontWeight="bold">
+                          {movie.title ?? movie.original_title ?? movie.name ?? movie.original_name ?? ""}
+                        </Heading>
+
+                        {
+                          /* prettier-ignore */ (movie.release_date || movie.first_air_date) && 
+                          <Text textStyle="sm">
+                            Data di uscita: {formatDate(movie.release_date! || movie.first_air_date!)}
+                          </Text>
+                        }
+                        {movie.vote_average > 0 && <Text textStyle="sm">Rating: {movie.vote_average}/10</Text>}
+                        {movie.overview && (
+                          <Text textStyle="sm" lineClamp="4">
+                            {movie.overview}
+                          </Text>
+                        )}
+                      </Box>
+                    }>
+                    <Image
+                      src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}
+                      alt={movie.title ?? movie.original_title ?? movie.name ?? movie.original_name ?? ""}
+                      width={300}
+                      height={450}
+                      aspectRatio={2 / 3}
+                      w="full"
+                      objectFit="cover"
+                    />
+                  </Tooltip>
                 </Card>
               </Link>
             </Box>

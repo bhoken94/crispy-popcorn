@@ -1,9 +1,17 @@
+import { Box, Button, Flex, Heading, Spacer, Stack, Text } from "@chakra-ui/react";
 import { useLogin, useLogout, useUser } from "@/lib/auth";
-import { Box, Button, Flex, Heading, Spacer } from "@chakra-ui/react";
 import { Link } from "react-router";
-import { Avatar } from "./avatar";
-import { ColorModeButton } from "./color-mode";
-import { MenuContent, MenuItem, MenuRoot, MenuTrigger } from "./menu";
+import { ColorModeButton } from "../ui/color-mode";
+import { MenuContent, MenuItem, MenuRoot, MenuTrigger } from "../ui/menu";
+import { Avatar } from "../ui/avatar";
+
+const Footer = () => {
+  return (
+    <Box as="footer" boxShadow="md" py={4} textAlign="center" textStyle="sm">
+      <Text>© {new Date().getFullYear()} Crispy Popcorn. All rights reserved.</Text>
+    </Box>
+  );
+};
 
 const Header = () => {
   const login = useLogin();
@@ -56,4 +64,14 @@ const Header = () => {
   );
 };
 
-export default Header;
+export const AppLayout = ({ children }: { children: React.ReactNode }) => {
+  return (
+    <>
+      <Header />
+      <Stack direction="column" align="center" justify="center" margin="auto" px={4} py={8}>
+        {children}
+      </Stack>
+      <Footer />
+    </>
+  );
+};
