@@ -58,7 +58,7 @@ const MovieList = ({ title, movies }: { title: string; movies: MediaItem[] }) =>
               flex={{ base: "0 0 50%", sm: "0 0 33.33%", md: "0 0 25%", lg: "0 0 20%" }}
               p={2}
               _first={{ pl: 2 }}>
-              <Link to={`/movie/${movie.id}`} key={movie.id}>
+              <Link to={`/movie/${movie.id}?type=${movie.media_type}`} key={movie.id}>
                 <Card
                   title={movie.title ?? movie.original_title ?? movie.name ?? movie.original_name ?? ""}
                   variant="elevated">

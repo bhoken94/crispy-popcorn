@@ -2,6 +2,7 @@ import { useDiscover } from "@/features/home/api/discover";
 import { useTrendingAll } from "@/features/home/api/trending-all";
 import MovieList from "@/features/home/components/movieList";
 import MovieSearch from "@/features/home/components/movieSearch";
+import { MediaItem } from "@/types/api";
 import { Flex, Heading, Spinner } from "@chakra-ui/react";
 
 const HomeRoute = () => {
@@ -27,6 +28,21 @@ const HomeRoute = () => {
       </Flex>
     );
   }
+
+  const discoverQueryResults = discoverQuery.data?.results.map((item: MediaItem) => {
+    return {
+      ...item,
+      media_type: item.media_type ?? "tv",
+    };
+  });
+
+  const upcomingMoviesQueryResults = upcomingMoviesQuery.data?.results.map((item: MediaItem) => {
+    return {
+      ...item,
+      media_type: item.media_type ?? "movie",
+    };
+  });
+
   return (
     <>
       <Heading size="4xl" fontSize="4xl">
@@ -34,8 +50,8 @@ const HomeRoute = () => {
       </Heading>
       <MovieSearch />
       <MovieList title="In tendenza" movies={trendingAllQuery.data?.results ?? []} />
-      <MovieList title="Serie TV Popolari" movies={discoverQuery.data?.results ?? []} />
-      <MovieList title="Film In uscita" movies={upcomingMoviesQuery.data?.results ?? []} />
+      <MovieList title="Serie TV Popolari" movies={discoverQueryResults ?? []} />
+      <MovieList title="Film In uscita" movies={upcomingMoviesQueryResults ?? []} />
     </>
   );
 };
